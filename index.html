@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在线倒数计时器 - 简洁版</title>
+    <title>简洁倒计时工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -11,9 +12,9 @@
             box-sizing: border-box;
             font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
         }
-        
+        
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #0a1929, #1d2c40, #2c3e50);
             color: #f0f0f0;
             min-height: 100vh;
             padding: 20px;
@@ -21,230 +22,206 @@
             justify-content: center;
             align-items: center;
         }
-        
+        
         .container {
-            background: rgba(20, 30, 48, 0.85);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             overflow: hidden;
             width: 100%;
             max-width: 500px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(100, 150, 255, 0.15);
+            animation: fadeIn 0.5s ease-out;
         }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 20px;
-            background: rgba(10, 15, 24, 0.6);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .time-display {
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-        
-        .battery {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-        
-        .battery-icon {
-            position: relative;
-            width: 25px;
-            height: 12px;
-            border: 1px solid #fff;
-            border-radius: 2px;
-            margin-left: 6px;
-        }
-        
-        .battery-icon:after {
-            content: "";
-            position: absolute;
-            top: 3px;
-            right: -4px;
-            width: 3px;
-            height: 6px;
-            background: #fff;
-            border-radius: 0 2px 2px 0;
-        }
-        
-        .battery-level {
-            position: absolute;
-            top: 1px;
-            left: 1px;
-            height: 10px;
-            background: #67b26f;
-            width: 67%;
-        }
-        
-        .content {
-            padding: 25px;
-        }
-        
+        
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            padding: 25px 25px 15px;
+            position: relative;
         }
-        
+        
         .header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-            background: linear-gradient(to right, #00c6ff, #0072ff);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #5ce1e6, #00c6ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: 1.5px;
         }
-        
+        
         .header p {
-            color: #a0aec0;
-            font-size: 16px;
+            color: #94a3b8;
+            font-size: 18px;
+            font-weight: 300;
         }
-        
-        .target-date {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .date-display {
+        
+        .current-time {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 50px;
+            margin: 15px auto;
+            padding: 12px 20px;
+            width: fit-content;
             font-size: 18px;
             font-weight: 500;
-            color: #38b2ac;
-            text-align: center;
-            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
         }
-        
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 198, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 198, 255, 0); }
+        }
+        
+        .current-time i {
+            color: #00c6ff;
+        }
+        
+        .content {
+            padding: 0 25px 25px;
+        }
+        
+        .target-date {
+            background: rgba(30, 41, 59, 0.65);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .target-date h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #5ce1e6;
+            font-weight: 500;
+        }
+        
+        .date-selection {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .date-input {
+            flex: 1;
+            max-width: 220px;
+            background: rgba(20, 30, 48, 0.85);
+            border: 2px solid rgba(92, 225, 230, 0.3);
+            border-radius: 12px;
+            color: white;
+            padding: 14px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .date-input:focus {
+            outline: none;
+            border-color: #5ce1e6;
+            box-shadow: 0 0 0 3px rgba(92, 225, 230, 0.2);
+        }
+        
         .countdown-container {
             display: flex;
             justify-content: space-around;
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 12px;
-            padding: 15px;
+            background: rgba(30, 41, 59, 0.65);
+            border-radius: 15px;
+            padding: 25px 15px;
             margin-bottom: 25px;
+            animation: scaleIn 0.4s ease-out;
         }
-        
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
         .countdown-unit {
             text-align: center;
             flex: 1;
         }
-        
+        
         .countdown-value {
             font-size: 32px;
             font-weight: 700;
-            color: #00c9ff;
+            background: linear-gradient(to bottom, #8aedff, #00c9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-        
+        
         .countdown-label {
             font-size: 14px;
-            color: #a0aec0;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
         }
-        
-        .calendar-container {
-            display: flex;
-            gap: 25px;
+        
+        .holiday-panel {
+            background: rgba(30, 41, 59, 0.65);
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 25px;
         }
-        
-        .calendar {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 12px;
-            padding: 15px;
-            flex: 2;
-        }
-        
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .calendar-month {
-            font-size: 20px;
-            font-weight: 600;
-            color: #00c6ff;
-        }
-        
-        .calendar-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .weekday {
-            text-align: center;
-            font-size: 14px;
-            color: #a0aec0;
-        }
-        
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-        
-        .calendar-day {
-            text-align: center;
-            padding: 8px 0;
-            border-radius: 8px;
-            cursor: default;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        
-        .calendar-day:hover {
-            background: rgba(56, 178, 172, 0.2);
-        }
-        
-        .calendar-day.selected {
-            background: #00c6ff;
-            color: #0f172a;
-            font-weight: 600;
-        }
-        
-        .holiday-panel {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 12px;
-            padding: 15px;
-            flex: 1;
-        }
-        
+        
         .holiday-panel h3 {
             font-size: 18px;
             margin-bottom: 15px;
-            color: #00c6ff;
+            color: #5ce1e6;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
-        
+        
         .holiday-list {
-            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
         }
-        
+        
         .holiday-item {
-            padding: 8px;
-            margin-bottom: 8px;
-            background: rgba(56, 178, 172, 0.15);
+            background: rgba(56, 178, 172, 0.2);
             border-radius: 8px;
+            padding: 10px 15px;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
         }
-        
+        
+        .holiday-item:hover {
+            transform: translateY(-3px);
+            background: rgba(56, 178, 172, 0.3);
+        }
+        
+        .holiday-item i {
+            color: #ffca64;
+        }
+        
         .controls {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
+            margin-top: 20px;
         }
-        
+        
         .btn {
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 50px;
             border: none;
             font-weight: 600;
@@ -252,72 +229,124 @@
             transition: all 0.3s ease;
             font-size: 16px;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+        
         .btn-set {
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            color: white;
+            background: linear-gradient(to right, #5ce1e6, #00c6ff);
+            color: rgba(15, 23, 42, 0.95);
         }
-        
+        
         .btn-reset {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
         }
-        
+        
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
-        
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-set:hover {
+            background: linear-gradient(to right, #00c6ff, #5ce1e6);
+        }
+        
         .footer {
             text-align: center;
-            margin-top: 20px;
-            color: #a0aec0;
+            padding: 20px;
+            color: #64748b;
             font-size: 14px;
+            border-top: 1px solid rgba(100, 116, 139, 0.2);
         }
-        
+        
         .footer a {
-            color: #00c6ff;
+            color: #5ce1e6;
             text-decoration: none;
+            transition: all 0.3s;
         }
-        
+        
+        .footer a:hover {
+            color: #8aedff;
+            text-decoration: underline;
+        }
+        
         @media (max-width: 600px) {
-            .calendar-container {
-                flex-direction: column;
-            }
-            
             .countdown-value {
-                font-size: 24px;
+                font-size: 28px;
             }
-            
-            .content {
-                padding: 15px;
+            
+            .date-selection {
+                flex-direction: column;
+                align-items: center;
             }
+            
+            .date-input {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(92, 225, 230, 0.2);
+            border-radius: 2px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #5ce1e6, #00c6ff);
+            width: 67%;
+            transition: width 0.5s ease-in-out;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="status-bar">
-            <div class="time-display">19:18</div>
-            <div class="battery">
-                <span>67</span>
-                <div class="battery-icon">
-                    <div class="battery-level"></div>
-                </div>
+        <div class="header">
+            <h1><i class="fas fa-clock"></i> 在线倒数</h1>
+            <p>创建简洁的倒数计时器</p>
+            
+            <div class="current-time">
+                <i class="fas fa-clock"></i>
+                <span id="current-time-display">--:--:--</span>
             </div>
         </div>
-        
+        
         <div class="content">
-            <div class="header">
-                <h1>在线倒数</h1>
-                <p>创建倒数计时器</p>
-            </div>
-            
             <div class="target-date">
-                <div class="date-display" id="target-date-display">2026-01-01 00:00</div>
+                <h3>目标日期</h3>
+                <div id="target-date-display">2026-01-01 00:00</div>
+                
+                <div class="date-selection">
+                    <input type="date" class="date-input" id="date-picker" value="2026-01-01">
+                    <input type="time" class="date-input" id="time-picker" value="00:00">
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
             </div>
-            
+            
             <div class="countdown-container">
                 <div class="countdown-unit">
                     <div class="countdown-value" id="days">000</div>
@@ -336,131 +365,125 @@
                     <div class="countdown-label">秒钟</div>
                 </div>
             </div>
-            
-            <div class="calendar-container">
-                <div class="calendar">
-                    <div class="calendar-header">
-                        <div class="calendar-month">十二月 2025</div>
-                    </div>
-                    
-                    <div class="calendar-weekdays">
-                        <div class="weekday">周日</div>
-                        <div class="weekday">周一</div>
-                        <div class="weekday">周二</div>
-                        <div class="weekday">周三</div>
-                        <div class="weekday">周四</div>
-                        <div class="weekday">周五</div>
-                        <div class="weekday">周六</div>
-                    </div>
-                    
-                    <div class="calendar-days" id="calendar-days">
-                        <!-- Calendar days will be generated by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="holiday-panel">
-                    <h3>即将到来的节日</h3>
-                    <ul class="holiday-list">
-                        <li class="holiday-item">元旦: 1月1日</li>
-                        <li class="holiday-item">春节: 2月10日</li>
-                        <li class="holiday-item">劳动节: 5月1日</li>
-                        <li class="holiday-item">国庆节: 10月1日</li>
-                    </ul>
+            
+            <div class="holiday-panel">
+                <h3><i class="fas fa-calendar-star"></i> 主要节日</h3>
+                <div class="holiday-list">
+                    <div class="holiday-item"><i class="fas fa-star"></i> 元旦: 1月1日</div>
+                    <div class="holiday-item"><i class="fas fa-dragon"></i> 春节: 农历正月初一</div>
+                    <div class="holiday-item"><i class="fas fa-tree"></i> 劳动节: 5月1日</div>
+                    <div class="holiday-item"><i class="fas fa-flag"></i> 国庆节: 10月1日</div>
                 </div>
             </div>
-            
+            
             <div class="controls">
-                <button class="btn btn-set" onclick="setNewDate()">设置新日期</button>
-                <button class="btn btn-reset" onclick="resetCountdown()">重置</button>
+                <button class="btn btn-set" onclick="applyNewDate()">
+                    <i class="fas fa-calendar-check"></i> 应用新日期
+                </button>
+                <button class="btn btn-reset" onclick="resetCountdown()">
+                    <i class="fas fa-undo-alt"></i> 重置
+                </button>
             </div>
         </div>
-        
+        
         <div class="footer">
-            无广告的简洁倒计时工具 | 基于HTML5实现
+            无广告简洁工具 | <a href="#" onclick="return false;">倒计时工具</a> | 基于HTML5开发
         </div>
     </div>
 
     <script>
-        // 设置目标日期（2026年1月1日）
-        const targetDate = new Date('2026-01-01T00:00:00');
-        
+        // 初始化目标日期（2026年1月1日）
+        let targetDate = new Date('2026-01-01T00:00:00');
+        
+        // 更新当前时间和倒计时
+        function updateTime() {
+            const now = new Date();
+            
+            // 更新当前时间显示
+            const currentTime = now.toTimeString().substring(0, 8);
+            document.getElementById('current-time-display').textContent = currentTime;
+            
+            // 更新倒计时
+            updateCountdown();
+        }
+        
         // 更新倒计时
         function updateCountdown() {
             const now = new Date();
             const diff = targetDate - now;
-            
+            
+            if (diff <= 0) {
+                // 倒计时结束
+                document.getElementById('days').textContent = '000';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+            
             // 计算天、小时、分钟和秒
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
+            
             // 更新显示
             document.getElementById('days').textContent = days.toString().padStart(3, '0');
             document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            
-            // 更新时间显示
-            document.querySelector('.time-display').textContent = 
-                now.getHours().toString().padStart(2, '0') + ':' + 
-                now.getMinutes().toString().padStart(2, '0');
+            
+            // 更新进度条
+            const totalTime = targetDate - new Date('2025-12-01T00:00:00');
+            const elapsedTime = targetDate - now;
+            const progressPercent = Math.max(0, Math.min(100, 100 - (elapsedTime / totalTime * 100)));
+            document.querySelector('.progress').style.width = `${progressPercent}%`;
         }
-        
-        // 生成日历
-        function generateCalendar() {
-            // 设置目标月份（2025年12月）
-            const calendarDate = new Date(2025, 11); // 月份是0-11, 11代表12月
-            
-            // 获取该月第一天是星期几（0-6，0代表周日）
-            const firstDay = new Date(calendarDate.getFullYear(), calendarDate.getMonth(), 1).getDay();
-            
-            // 获取该月的天数
-            const daysInMonth = new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 0).getDate();
-            
-            let dayGrid = '';
-            
-            // 添加空白格子（第一天之前的空白）
-            for (let i = 0; i < firstDay; i++) {
-                dayGrid += `<div class="calendar-day"></div>`;
-            }
-            
-            // 添加日期格子
-            for (let day = 1; day <= daysInMonth; day++) {
-                // 高亮选中的日期（1号）
-                const isSelected = (day === 1);
-                dayGrid += `<div class="calendar-day ${isSelected ? 'selected' : ''}">${day}</div>`;
-            }
-            
-            // 将日历添加到DOM
-            document.getElementById('calendar-days').innerHTML = dayGrid;
-        }
-        
-        // 设置新日期
-        function setNewDate() {
-            const newDate = prompt("请输入新的目标日期 (YYYY-MM-DD):", "2026-01-01");
-            if (newDate && Date.parse(newDate)) {
-                targetDate.setTime(Date.parse(newDate));
-                document.getElementById('target-date-display').textContent = 
-                    newDate + " 00:00";
-                alert("新日期已设置为: " + newDate);
-            } else if (newDate !== null) {
-                alert("无效的日期格式，请使用 YYYY-MM-DD 格式");
+        
+        // 应用新日期
+        function applyNewDate() {
+            const datePicker = document.getElementById('date-picker');
+            const timePicker = document.getElementById('time-picker');
+            
+            // 组合日期和时间
+            const newTargetDateTime = `${datePicker.value}T${timePicker.value}:00`;
+            
+            if (new Date(newTargetDateTime) > new Date()) {
+                targetDate = new Date(newTargetDateTime);
+                document.getElementById('target-date-display').textContent = 
+                    `${datePicker.value} ${timePicker.value}`;
+                
+                // 添加动画效果
+                const countdownContainer = document.querySelector('.countdown-container');
+                countdownContainer.style.animation = 'none';
+                setTimeout(() => {
+                    countdownContainer.style.animation = 'scaleIn 0.4s ease-out';
+                }, 10);
+            } else {
+                alert("请选择未来的日期和时间！");
             }
         }
-        
+        
         // 重置倒计时
         function resetCountdown() {
-            targetDate.setTime(Date.parse('2026-01-01T00:00:00'));
-            document.getElementById('target-date-display').textContent = "2026-01-01 00:00";
-            alert("倒计时已重置");
+            targetDate = new Date('2026-01-01T00:00:00');
+            document.getElementById('date-picker').value = '2026-01-01';
+            document.getElementById('time-picker').value = '00:00';
+            document.getElementById('target-date-display').textContent = '2026-01-01 00:00';
+            document.querySelector('.progress').style.width = '67%';
         }
-        
+        
         // 初始化
         window.onload = function() {
-            generateCalendar();
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
+            // 设置初始日期选择器值
+            document.getElementById('date-picker').value = '2026-01-01';
+            document.getElementById('time-picker').value = '00:00';
+            
+            // 立即更新时间显示
+            updateTime();
+            
+            // 每秒钟更新一次时间和倒计时
+            setInterval(updateTime, 1000);
         };
     </script>
 </body>
